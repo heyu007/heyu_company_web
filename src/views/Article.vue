@@ -34,7 +34,8 @@
                                 <div class="reply-content">
                                     <el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
                                         <!-- <span class="el-icon-user" style="width:30px;height:30px;font-size:30px;border:1px solid 1px;"></span> -->
-                                        <el-avatar shape="square" :size="50" :src="squareUrl"></el-avatar>
+                                        <!-- <el-avatar shape="square" :size="50" :src="squareUrl"></el-avatar> -->
+                                        <el-image :src="squareUrl" style="width:80%"></el-image>
                                     </el-col> 
                                     <el-col :xs="22" :sm="22" :md="22" :lg="22" :xl="22">
                                         <div class="jian-ge">
@@ -42,12 +43,22 @@
                                         </div>
                                         <div class="jian-ge" style="font-size:12px;padding-top:1em"> 
                                             <span class="jian-ge"> <i class="el-icon-time"></i> {{item.created_time.split("T")[0]}} </span>
-                                            <span><i class="el-icon-star-off"></i> {{item.hit}}</span>
+                                            <span><i class="el-icon-star-off" @click="ding(item.id,index)"></i> {{item.hit}}</span>
                                         </div>
                                     </el-col>  
                                 </div>
-                                
-                            </div>     
+                            </div>    
+                            <div class="reply">
+                                <el-form :model="ruleForm" :rules="rules" ref="ruleForm" class="demo-ruleForm">
+                                  <el-form-item prop="desc">
+                                        <el-input type="textarea" v-model="ruleForm.desc" placeholder="回复"></el-input>
+                                    </el-form-item>
+                                    <el-form-item>
+                                        <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
+                                        <el-button @click="resetForm('ruleForm')">重置</el-button>
+                                    </el-form-item>
+                                </el-form>
+                            </div> 
                         </div>
                    </div>
 
@@ -91,9 +102,19 @@ export default {
             create_time:'',
             article_view:0,
             article_reply:[],
+            ruleForm: {
+                desc: ''
+            },
+            rules: {
+                desc: [
+                    { required: true, message: '回复内容不能为空哟', trigger: 'blur' }
+                ]
+            }
         }
     },
     methods:{
+
+        // 文章信息
         findArticle(){
            this.$axios.get(this.$gd.url_prefix+'/articleInfo',{
                params:{
@@ -111,7 +132,57 @@ export default {
             }
            })
 
-        }
+        },
+        submitForm(formName) {
+            this.$refs[formName].validate((valid) => {
+            if (valid) {
+                this.$axios.post(this.$gd.url_prefix+'/add_reply_content',{
+                    params:{
+                        content:this.ruleForm.desc,
+                        article_id:this.$route.query.id,
+                    }
+                }).then((response)=>{
+                    let data = response.data;
+                    this.$message('回复成功');
+                    console.log(data);
+                    if(data.code == 200 && data.data){
+                        data.data.hit = 0;
+                        this.article_reply.push(data.data);
+                    }
+                    this.ruleForm.desc = '';
+                })
+
+            } else {
+                this.$message({
+                    message:'请填写回复信息',
+                    type:'warning'
+                })
+                return false;
+            }
+            });
+        },
+
+        // 重置表单回复内容
+        resetForm(formName) {
+            this.$refs[formName].resetFields();
+        },
+            // 标记
+        ding(reply_id,index){
+            this.$axios.post(this.$gd.url_prefix+'/add_reply_hit',{
+                params:{
+                    id:reply_id
+                }
+            }).then((response)=>{
+                let data = response.data;
+                if(data.code == 200){
+                    this.article_reply[index].hit += 1;
+                this.$message('感谢你的支持~~~');
+                }else{
+                    console.log(response);
+                    this.$message('哦豁,服务器没了~~~');
+                }
+            })
+        },
     }
 }
 </script>

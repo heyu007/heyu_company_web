@@ -31,14 +31,14 @@
                   {{item.title}}
                 </div>
                 <div style="margin-top:0.5em;font-size:14px">
-                  <span class="jian-ge"><i class="el-icon-time"></i>   {{item.created_time}} </span>
+                  <span class="jian-ge"><i class="el-icon-time"></i>   {{item.created_time.split("T")[0]}} </span>
                 </div>
               </div>
               <div class="msg-content">
                 <div v-html="item.content.substring(0,500)" @click="articleInfo(item.id)"></div><span>...</span>
                 <div class="msg-label">
                   <div class="time">
-                    <span :plain="true" @click="ding" style="margin-right:5em"><i class="el-icon-star-off"></i>  {{item.hit}}</span>
+                    <span :plain="true" @click="ding(item.id,index)" style="margin-right:5em"><i class="el-icon-star-off"></i>  {{item.hit}}</span>
                     <span> <i class="el-icon-chat-dot-square"></i> {{item.view}} </span>
                   </div>
                 </div>
@@ -269,12 +269,21 @@ export default {
     },
 
     // 标记
-    ding(){
-      this.$message({
-          message: '讨厌！死鬼，点到人家了！！！',
-          // type: 'success',
-          center:true
-        });
+    ding(article_id,index){
+      this.$axios.post(this.$gd.url_prefix+'/add_hit',{
+        params:{
+          id:article_id
+        }
+      }).then((response)=>{
+        let data = response.data;
+        if(data.code == 200){
+          this.article[index].hit += 1;
+          this.$message('感谢你的支持~~~');
+        }else{
+          console.log(response);
+          this.$message('哦豁,服务器没了~~~');
+        }
+      })
     },
 
     // 添加信息
@@ -432,10 +441,16 @@ export default {
     padding:0.3em 1em;
     border-bottom:1px solid #e6e6e6;
   }
+
+  .msg-title:hover{
+      cursor:pointer;
+  }
+
   .msg-content{
     text-align:left;
     padding:0.3em 1em;
   }
+
   .time{
     padding-top:1em;
     font-size:14px
