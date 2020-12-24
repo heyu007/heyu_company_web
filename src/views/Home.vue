@@ -32,6 +32,7 @@
                 </div>
                 <div style="margin-top:0.5em;font-size:14px">
                   <span class="jian-ge"><i class="el-icon-time"></i>   {{item.created_time.split("T")[0]}} </span>
+                  <span class="jian-ge"> <i class="el-icon-view"></i> {{item.view}} </span>
                 </div>
               </div>
               <div class="msg-content">
@@ -39,7 +40,7 @@
                 <div class="msg-label">
                   <div class="time">
                     <span :plain="true" @click="ding(item.id,index)" style="margin-right:5em"><i class="el-icon-star-off"></i>  {{item.hit}}</span>
-                    <span> <i class="el-icon-chat-dot-square"></i> {{item.view}} </span>
+                    <span @click="articleInfo(item.id)"> <i class="el-icon-chat-dot-square"></i> {{item.reply}} </span>
                   </div>
                 </div>
               </div>
@@ -117,6 +118,9 @@
         <!-- 网站信息 -->
         <webInfo></webInfo>
 
+        <!-- 排行榜 -->
+        <rankList></rankList>
+
       </el-col>
       <!-- right end -->
     </el-row>
@@ -129,6 +133,7 @@ import notice from "../components/Notice.vue";
 import labels from "../components/Labels.vue";
 import carousel from "../components/Carousel.vue";
 import WebInfo from "../components/WebInfo.vue";
+import rankList from "../components/Rank.vue";
 
 export default {
   name: 'HelloWorld',
@@ -140,6 +145,7 @@ export default {
     labels,
     carousel,
     WebInfo,
+    rankList,
   },
   data(){
     return {

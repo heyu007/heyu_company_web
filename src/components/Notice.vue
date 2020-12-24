@@ -7,7 +7,8 @@
               <span class="jian-ge">公告</span>  
             </div>
             <div class="notice-body">
-              {{noticeContent}}
+              <h3 class="notice-title"> {{noticeTitle}} </h3>
+              <p class="nootice-content"> {{noticeContent}} </p>
             </div>
           </div>
         </div>
@@ -38,9 +39,17 @@
 
   }
   .notice-body{
-    text-align: left;
     padding:1em;
   }
+
+  .notice-title{
+    text-align: center;
+  }
+
+  .notice-content{
+    text-align:left;
+  }
+
   .jian-ge{
     padding:0 0.2em;
   }
@@ -50,8 +59,23 @@
 export default {
     data(){
         return{
-            noticeContent:"这里是公告123"
+            noticeTitle:'公告',
+            noticeContent:"这里是公告123",
         }
+    },
+    mounted(){
+      this.noticeInfo();
+    },
+    methods:{
+      noticeInfo(){
+        this.$axios.get(this.$gd.url_prefix+'/notice').then((response)=>{
+          let notice = response.data;
+          if(notice.code == 200 && notice.data.length >0){
+            this.noticeTitle = notice.data[0].title;
+            this.noticeContent = notice.data[0].content;
+          }
+        })
+      }
     }
 }
 </script>

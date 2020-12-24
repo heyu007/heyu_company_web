@@ -7,8 +7,8 @@
               <span class="jian-ge">标签</span>  
             </div>
             <div class="tag-group" style="text-align:left;padding:1em;">
-              <el-tag v-for="(item,index) in items" :key="index" :type="item.type" effect="dark" style="margin:0.2em" size="small">
-                <span style="margin:0 0.5em">{{ item.label }}</span>
+              <el-tag v-for="(item,index) in labels" :key="index" :type="labelTypeList[Math.floor(Math.random() * (labelTypeList.length -1))]" effect="dark" style="margin:0.2em" size="small">
+                <span style="margin:0 0.5em">{{ item.name }}</span>
               </el-tag>
             </div>    
           </div>
@@ -51,19 +51,35 @@
 export default {
     data(){
         return{
-            items: [
-            { type: '', label: '标签一' },
-            { type: 'success', label: '标签二' },
-            { type: 'info', label: '标签三' },
-            { type: 'danger', label: '标签四' },
-            { type: 'warning', label: '标签五' },
-            { type: '', label: '标签一' },
-            { type: 'success', label: '标签二' },
-            { type: 'info', label: '标签三' },
-            { type: 'danger', label: '标签四' },
-            { type: 'warning', label: '标签五' }
-            ],
+            labelTypeList:['success','primary','info','warning','danger',''],
+            labels: [
+              {name:'标签1',number:'1'},
+              {name:'标签1',number:'1'},
+              {name:'标签1',number:'1'},
+              {name:'标签1',number:'1'},
+              {name:'标签1',number:'1'},
+              {name:'标签1',number:'1'},
+              {name:'标签1',number:'1'},
+              {name:'标签1',number:'1'},
+              {name:'标签1',number:'1'},
+              {name:'标签1',number:'1'},
+              {name:'标签1',number:'1'},
+            ]
         }
+    },
+    mounted(){
+      this.labelList();
+    },
+    methods:{
+      labelList(){
+        this.$axios.get(this.$gd.url_prefix+'/label').then((response)=>{
+          let labels = response.data;
+          console.log(labels);
+          if(labels.code == 200 && labels.data.lenght > 0){
+            this.labels = labels.data;
+          }
+        })
+      }
     }
 }
 </script>

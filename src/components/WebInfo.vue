@@ -30,19 +30,6 @@
                </div>
             </el-card>
           </div>
-          <div class="rank">
-            <el-card class="box-card" shadow="never">
-              <div slot="header" class="clearfix">
-                <div class="rank-header" style="text-align: left;">
-                  <i class="el-icon-s-data"></i>
-                  <span class="jian-ge">排行榜</span>
-                </div>
-              </div>
-              <div v-for="o in 4" :key="o" class="text item" style="text-align: left;padding:0.2em 0">
-                {{'列表内容 ' + o }}
-              </div>
-            </el-card>
-          </div>
         </div>
     </div>
 </template>
@@ -129,10 +116,12 @@ export default {
               "name":'heyu',
               "header_img":'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1024793515,716085277&fm=15&gp=0.jpg'
             },
+            rank:[],
         }
     },
     mounted(){
         this.getLocation(); // 调用获取地理位置
+        this.articleRank();
     },
     methods:{
         toArticle(){
@@ -142,6 +131,15 @@ export default {
                   id:1
                 }
             })
+         },
+         articleRank(){
+           this.$axios.get(this.$gd.url_prefix+'/article_rank_list').then((response)=>{
+             let rank = response.data;
+             if(rank.code == 200 && rank.data.length > 0){
+               this.rank = rank.data;
+             }
+            //  console.log(this.rank[0].title);return;
+           }) 
          },
     
         /**获取地图定位*/
