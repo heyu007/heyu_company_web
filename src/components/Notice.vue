@@ -20,6 +20,7 @@
   .grid-content {
     border-radius: 4px;
     min-height: 36px;
+    font-size:13px;
   }
 
     .labels{

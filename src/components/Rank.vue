@@ -8,8 +8,13 @@
                     <span class="jian-ge">排行榜</span>
                 </div>
                 </div>
-                <div v-for="(item,index) in rank" :key="index" class="text item" style="text-align: left;padding:0.2em 0">
-                <span @click="rankDump(item.id)" style="cursor:pointer"> {{index+1+'. '+item.title}} </span>
+                <div v-for="(item,index) in rank" :key="index" class="text" style="text-align: left;">
+                <el-badge v-if="index == 0" value="hot" class="item"  type="danger">
+                  <el-button size="small" @click="rankDump(item.id)">{{index+1+'. '+item.title}} </el-button>
+                </el-badge>
+                <el-badge v-else :value="item.hit" :max="99" class="item" type="info">
+                  <el-button size="small" @click="rankDump(item.id)" >{{index+1+'. '+item.title}} </el-button>
+                </el-badge>
                 </div>
             </el-card>
         </div>
@@ -54,4 +59,10 @@ export default {
     margin:0.5em 0;
     font-size:13px
   }
+
+  .item {
+  margin-top: 10px;
+  margin-right: 40px;
+  cursor:pointer;
+}
 </style>

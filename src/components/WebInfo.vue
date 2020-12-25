@@ -9,7 +9,7 @@
                   </div>
                 </div>
                 <div class="web-something">
-                  <span>asdasdadasdasd</span>
+                  <span>以梦为马，不负韶华</span>
                 </div>
               </div>
             <el-card class="box-card" shadow="never">
@@ -25,9 +25,6 @@
               <div style="text-align: left;padding-bottom:1em">
                 <i class="el-icon-location-outline"> {{province + city + district}}</i>
               </div>
-               <div>
-                 <el-button type="primary" style="width:100%" size="small" @click="toArticle"> <i class="el-icon-edit-outline"></i> 我要发布</el-button>
-               </div>
             </el-card>
           </div>
         </div>
@@ -124,14 +121,6 @@ export default {
         this.articleRank();
     },
     methods:{
-        toArticle(){
-            this.$router.push({
-                path:'/article',
-                query:{
-                  id:1
-                }
-            })
-         },
          articleRank(){
            this.$axios.get(this.$gd.url_prefix+'/article_rank_list').then((response)=>{
              let rank = response.data;

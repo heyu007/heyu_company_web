@@ -60,7 +60,7 @@
           <!-- news end -->
 
           <!-- add message start -->
-          <el-tab-pane label="添加信息">
+          <el-tab-pane label="我要发布">
             <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
               <el-form-item label="名称" prop="name">
                 <el-input v-model="ruleForm.name"></el-input>
@@ -71,31 +71,30 @@
                 </el-select>
               </el-form-item>
               <el-form-item label="行业" prop="region">
-                <el-select v-model="ruleForm.region" placeholder="请选择行业">
-                  <el-option :label="item.name" :value="item.val" v-for="(item,index) in industry" :key=index></el-option>
+                <el-select v-model="ruleForm.industry" placeholder="请选择行业">
+                  <el-option :label="item.name" :value="item.id" v-for="(item,index) in industry" :key=index></el-option>
                 </el-select>
               </el-form-item>
               <el-form-item label="时间" required style="text-align:center;">
                 <el-col :span="11">
                   <el-form-item prop="date1">
-                    <el-date-picker type="date" placeholder="开始日期" v-model="ruleForm.date1" style="width: 100%"></el-date-picker>
+                    <el-date-picker type="date" placeholder="开始日期" v-model="ruleForm.startDate" style="width: 100%"></el-date-picker>
                   </el-form-item>
                 </el-col>
                 <el-col class="line" :span="2">-</el-col>
                 <el-col :span="11">
                   <el-form-item prop="date2">
-                    <el-date-picker type="date" placeholder="结束日期" v-model="ruleForm.date2" style="width: 100%;"></el-date-picker>
+                    <el-date-picker type="date" placeholder="结束日期" v-model="ruleForm.endDate" style="width: 100%;"></el-date-picker>
                   </el-form-item>
                 </el-col>
               </el-form-item>
               <el-form-item label="标签" prop="type">
                 <el-checkbox-group v-model="ruleForm.type">
                   <el-checkbox :label="item.name" name="type" v-for="(item,index) in types" :key=index></el-checkbox>
-
                 </el-checkbox-group>
               </el-form-item>
-              <el-form-item label="说明" prop="desc">
-                <el-input type="textarea" v-model="ruleForm.desc"></el-input>
+              <el-form-item label="内容" prop="desc">
+                <el-input type="textarea" v-model="ruleForm.content"></el-input>
               </el-form-item>
               <el-form-item>
                 <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
@@ -106,9 +105,6 @@
           <!-- add message end -->
 
         </el-tabs>
-
-
-
       </el-col>
       <!-- center end -->
 
@@ -162,13 +158,13 @@ export default {
       article:[],
       article_end:' 玩命加载中... ...',
       industry:[
-        {'val':1,'name':'互联网IT'},
-        {'val':2,'name':'制造业'},
-        {'val':3,'name':'建筑'},
-        {'val':4,'name':'金融'},
-        {'val':5,'name':'房产'},
-        {'val':6,'name':'教育'},
-        {'val':7,'name':'餐饮'},
+        {'id':0,'name':'互联网'},
+        {'id':0,'name':'制造业'},
+        {'id':0,'name':'建筑'},
+        {'id':0,'name':'金融'},
+        {'id':0,'name':'房产'},
+        {'id':0,'name':'教育'},
+        {'id':0,'name':'餐饮'},
       ],
       types:[
         {'name':'朝九晚六'},
@@ -185,40 +181,44 @@ export default {
       ],
       ruleForm: {
         name: '',
-        region:'',
+        industry:'',
         location: '',
-        date1: '',
-        date2: '',
+        startDate: '',
+        endDate: '',
         type: [],
-        desc: ''
+        content: ''
       },
       rules: {
         name: [
           { required: true, message: '请输入具体名称', trigger: 'blur' },
-          { min: 5, max: 20, message: '长度在 5 到 20 个字符', trigger: 'blur' }
+          { min: 5, max: 50, message: '长度在 5 ~ 50 个字符', trigger: 'blur' }
         ],
-        region: [
+        industry: [
           { required: true, message: '请选择行业', trigger: 'change' }
         ],
         // location: [
         //   { required: true, message: '请选择所在区域', trigger: 'change' }
         // ],
-        date1: [
-          { required: true, message: '请选择日期', trigger: 'change' }
+        startDate: [
+          { required: true, message: '请选择开始日期', trigger: 'change' }
         ],
-        date2: [
-          { required: true, message: '请选择时间', trigger: 'change' }
+        endDate: [
+          { required: true, message: '请选择结束日期', trigger: 'change' }
         ],
         type: [
-          { type: 'array', required: true, message: '请至少选择一个活动性质', trigger: 'change' }
+          { type: 'array', required: true, message: '请至少选择一个标签', trigger: 'change' }
         ],
-        desc: [
-          { required: true, message: '请填写活动形式', trigger: 'blur' }
+        content: [
+          { required: true, message: '请具体说明情况', trigger: 'blur' }
         ]
       },
     }
   },
   mounted () {
+    // 加载添加配置信息
+    this.loadLabelMsg();
+    this.loadIndustryMsg();
+
     // 当页面加载DOM完时，监控scroll()方法是否成立触发条件
     this.scroll();
   },
@@ -286,8 +286,28 @@ export default {
           this.article[index].hit += 1;
           this.$message('感谢你的支持~~~');
         }else{
-          console.log(response);
           this.$message('哦豁,服务器没了~~~');
+        }
+      })
+    },
+
+    // 加载添加配置信息
+    loadLabelMsg(){
+      // 标签
+      this.$axios.get(this.$gd.url_prefix+'/label').then((response)=>{
+        let labels = response.data;
+        if(labels.code == 200){
+          this.types = labels.data
+        }
+      });
+    },
+
+    loadIndustryMsg(){
+      // 行业
+      this.$axios.get(this.$gd.url_prefix+'/industry').then((response)=>{
+        let industry = response.data;
+        if(industry.code == 200){
+          this.industry = industry.data;  
         }
       })
     },
@@ -296,12 +316,36 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          alert('submit!');
-          this.ruleForm.date1 = this.dateFormat(this.ruleForm.date1);
-           this.ruleForm.date2 = this.dateFormat(this.ruleForm.date2);
-          console.log(this.ruleForm);
+          this.ruleForm.startDate = this.dateFormat(this.ruleForm.startDate).split("T")[0];
+          this.ruleForm.endDate = this.dateFormat(this.ruleForm.endDate).split("T")[0];
+          this.$axios.post(this.$gd.url_prefix+'/add_one_article',{
+            title: this.ruleForm.name,
+            industry:this.ruleForm.industry,
+            location: this.ruleForm.location,
+            startDate: this.ruleForm.startDate,
+            endDate: this.ruleForm.endDate,
+            label: this.ruleForm.type.join(","),
+            content: this.ruleForm.content
+          }).then((response)=>{
+            let result = response.data;
+            // console.log(result);
+            if(result.code == 200 && result.data){
+              this.$message('发布成功~~~');
+              setTimeout(function(){
+                location.reload();
+              },2000)
+            }else{
+              this.$message({
+                message:'网络出错了哟~~~',
+                type:'error',
+              })
+            }
+          })
         } else {
-          console.log('error submit!!');
+          this.$message({
+            message:'出错了哟~~~',
+            type:'error'
+          })
           return false;
         }
       });
