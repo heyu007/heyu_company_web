@@ -36,7 +36,7 @@
                 </div>
               </div>
               <div class="msg-content">
-                <div v-html="item.content.substring(0,500)" @click="articleInfo(item.id)"></div><span>...</span>
+                <div v-html="item.content.substring(0,200)" @click="articleInfo(item.id)"></div><span>...</span>
                 <div class="msg-label">
                   <div class="time">
                     <span :plain="true" @click="ding(item.id,index)" style="margin-right:5em"><i class="el-icon-star-off"></i>  {{item.hit}}</span>
@@ -249,7 +249,10 @@ export default {
             this.article_end = 'Done ~ ~ ~';
             this.load = false
           }
-        }
+        }else{
+            this.article_end = 'Done ~ ~ ~';
+            this.load = false
+          }
       })
     },
 
@@ -485,6 +488,7 @@ export default {
     border:1px solid #e6e6e6;
     border-radius: 3px;
     background-color:white;
+    color:#606266;
   }
   .msg-title{
     text-align:left;
@@ -499,6 +503,7 @@ export default {
   .msg-content{
     text-align:left;
     padding:0.3em 1em;
+    font-size:13px;
   }
 
   .time{

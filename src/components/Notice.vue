@@ -3,11 +3,11 @@
         <div class="grid-content" style="background-color:white;border:1px solid #EBEEF5">
           <div class="notice">
             <div class="labels-header">
-              <i class="el-icon-notebook-1"></i>
+              <!-- <i class="el-icon-notebook-1"></i> -->
               <span class="jian-ge">公告</span>  
             </div>
             <div class="notice-body">
-              <h3 class="notice-title"> {{noticeTitle}} </h3>
+              <!-- <h3 class="notice-title"> {{noticeTitle}} </h3> -->
               <p class="nootice-content"> {{noticeContent}} </p>
             </div>
           </div>
@@ -35,8 +35,8 @@
 
   .labels-header{
     text-align: left;
-    padding:1em;
-    border-bottom:1px solid #e6e6e6;
+    padding:1em 1em 0 1em;
+    // border-bottom:1px solid #e6e6e6;
 
   }
   .notice-body{

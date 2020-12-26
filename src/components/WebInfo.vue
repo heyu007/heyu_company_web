@@ -14,16 +14,16 @@
               </div>
             <el-card class="box-card" shadow="never">
               <div style="text-align: left;padding-bottom:1em">
-                <i class="el-icon-location-outline"> {{province + city + district}}</i>
+                <i class="el-icon-phone-outline"> 电话热线 ：12345</i>
               </div>
               <div style="text-align: left;padding-bottom:1em">
-                <i class="el-icon-location-outline"> {{province + city + district}}</i>
+                <i class="el-icon-date"> 今日日期 ： {{dateInfo}} </i>
               </div>
               <div style="text-align: left;padding-bottom:1em">
-                <i class="el-icon-location-outline"> {{province + city + district}}</i>
+                <i class="el-icon-sunny"></i> <span v-html="weather"></span>
               </div>
               <div style="text-align: left;padding-bottom:1em">
-                <i class="el-icon-location-outline"> {{province + city + district}}</i>
+                <i class="el-icon-location-outline"> 我的位置 ：{{province + city + district}}</i>
               </div>
             </el-card>
           </div>
@@ -106,11 +106,13 @@ import { location } from "../common/location.js";
 export default {
     data(){
         return{
-            province: "",
-            city:"",
-            district:"",
+            weather:"本地天气：拼命加载中~~~",
+            province: "北极",
+            city:"北极",
+            district:"北极",
+            dateInfo:'',
             web_info:{
-              "name":'heyu',
+              "name":'laowang',
               "header_img":'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1024793515,716085277&fm=15&gp=0.jpg'
             },
             rank:[],
@@ -133,6 +135,7 @@ export default {
     
         /**获取地图定位*/
         getLocation() {
+            console.log(12312231);
             let _that = this;
             let geolocation = location.initMap("map-container"); //定位
             AMap.event.addListener(geolocation, "complete", result => {
@@ -142,7 +145,40 @@ export default {
                 _that.province = result.addressComponent.province;
                 _that.city = result.addressComponent.city;
                 _that.district = result.addressComponent.district;
+                _that.weatherInfo(this.province,this.city);
+                _that.getCurrentDate(0);
             });
+
+            
+        },
+        // 天气
+        weatherInfo(province,city){
+          if(province && city){
+            this.$axios.post(this.$gd.url_prefix+'/weather',{
+              msg:this.province+this.city+'天气',
+            }).then((response)=>{
+              let weatherInfoMsg = response.data;
+              // console.log(weatherInfoMsg);
+              let res = JSON.parse(weatherInfoMsg.data);
+              console.log(res);
+              if(res.result == 0){
+                this.weather = res.content.split("{br}").join('</br>');
+              }
+            })
+          }
+        },
+
+        // 日期
+        getCurrentDate(n) {
+          var dd = new Date();
+          if (n) {
+            dd.setDate(dd.getDate() - n);
+          }
+          var year = dd.getFullYear();
+          var month =
+            dd.getMonth() + 1 < 10 ? "0" + (dd.getMonth() + 1) : dd.getMonth() + 1;
+          var day = dd.getDate() < 10 ? "0" + dd.getDate() : dd.getDate();
+          this.dateInfo = year + "-" + month + "-" + day;
         },
     }
 }

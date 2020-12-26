@@ -3,7 +3,7 @@
         <div class="grid-content" style="background-color:white">
           <div class="labels">
             <div class="labels-header">
-              <i class="el-icon-collection-tag"></i>
+              <!-- <i class="el-icon-collection-tag"></i> -->
               <span class="jian-ge">标签</span>  
             </div>
             <div class="tag-group" style="text-align:left;padding:1em;">
@@ -34,8 +34,8 @@
 
   .labels-header{
     text-align: left;
-    padding:1em;
-    border-bottom:1px solid #e6e6e6;
+    padding:1em 1em 0 1em;
+    // border-bottom:1px solid #e6e6e6;
 
   }
   .notice-body{
