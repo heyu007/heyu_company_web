@@ -1,25 +1,34 @@
 <template>
   <div id="app">
     <div class="nav-top">
-      <el-menu class="el-menu-demo" mode="horizontal" style="background-color:rgba(255,255,255,0.7)">
-        <el-menu-item>
+      <div class="el-menu-demo" mode="horizontal" style="background-color:rgba(255,255,255,0.7)">
+        <div class="web-logo">
           假装有logo
-        </el-menu-item>
-        <el-menu-item style="float:right">
+        </div>
+        <div class="web-search">
           <el-input  placeholder="请输入内容" prefix-icon="el-icon-search" v-model="keyword" @change="serach"></el-input>
-        </el-menu-item>
-      </el-menu>
+        </div>
+        <div style="clear:both"></div>
+      </div>
       <div class="line"></div>
     </div>
     <div class="index_bg" style="width:100%;height:500px;" :style="'background:url('+index_bg_show+') repeat center center'"></div>
     <div style="margin-top:30px"></div>
 
     <router-view/>
+    
+    <!-- 返回顶部 -->
+    <Top></Top>
   </div>
 </template>
 
 <script>
+import Top from "./components/Top.vue";
+
 export default {
+  components:{
+    Top,
+  },
   data() {
     return {
       keyword: '',
@@ -42,7 +51,7 @@ export default {
   },
   methods:{
     serach(e){
-      console.log(e)
+      this.$message(e);
     },
     rand_bg(){
       let Max = this.index_bg.length - 1;
@@ -88,5 +97,23 @@ export default {
 .index_bg{
   width:100%;
 
+}
+
+.web-logo{
+    float: left;
+    height: 60px;
+    line-height: 60px;
+    margin: 0;
+    color:#606266;
+    padding:0 0.8em;
+}
+
+.web-search{
+    float: right;
+    height: 60px;
+    line-height: 60px;
+    margin: 0;
+    color:#606266;
+    padding:0 0.8em;
 }
 </style>

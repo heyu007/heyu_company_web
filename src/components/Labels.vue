@@ -74,7 +74,7 @@ export default {
       labelList(){
         this.$axios.get(this.$gd.url_prefix+'/label').then((response)=>{
           let labels = response.data;
-          console.log(labels);
+          // console.log(labels);
           if(labels.code == 200 && labels.data.lenght > 0){
             this.labels = labels.data;
           }

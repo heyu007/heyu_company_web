@@ -135,7 +135,6 @@ export default {
     
         /**获取地图定位*/
         getLocation() {
-            console.log(12312231);
             let _that = this;
             let geolocation = location.initMap("map-container"); //定位
             AMap.event.addListener(geolocation, "complete", result => {
@@ -160,7 +159,7 @@ export default {
               let weatherInfoMsg = response.data;
               // console.log(weatherInfoMsg);
               let res = JSON.parse(weatherInfoMsg.data);
-              console.log(res);
+              // console.log(res);
               if(res.result == 0){
                 this.weather = res.content.split("{br}").join('</br>');
               }
