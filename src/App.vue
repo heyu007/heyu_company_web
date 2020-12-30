@@ -1,33 +1,28 @@
 <template>
   <div id="app">
-    <div class="nav-top">
-      <div class="el-menu-demo" mode="horizontal" style="background-color:rgba(255,255,255,0.7)">
-        <div class="web-logo">
-          假装有logo
-        </div>
-        <div class="web-search">
-          <el-input  placeholder="请输入内容" prefix-icon="el-icon-search" v-model="keyword" @change="serach"></el-input>
-        </div>
-        <div style="clear:both"></div>
-      </div>
-      <div class="line"></div>
-    </div>
-    <div class="index_bg" style="width:100%;height:500px;" :style="'background:url('+index_bg_show+') repeat center center'"></div>
-    <div style="margin-top:30px"></div>
+    <!-- 顶部导航搜索 -->
+    <TopNav></TopNav>
+
+    <!-- 顶部背景图 -->
+    <TopBg></TopBg>
 
     <router-view/>
     
     <!-- 返回顶部 -->
-    <Top></Top>
+    <BackTop></BackTop>
   </div>
 </template>
 
 <script>
-import Top from "./components/Top.vue";
+import BackTop from "./components/BackTop.vue";
+import TopNav from "./components/TopNav.vue";
+import TopBg from "./components/TopBg.vue";
 
 export default {
   components:{
-    Top,
+    BackTop,
+    TopNav,
+    TopBg,
   },
   data() {
     return {
@@ -64,6 +59,25 @@ export default {
 </script>
 
 <style lang="scss">
+
+
+	::-webkit-scrollbar {
+		width: 5px;
+		height: 20px;
+	}
+
+	::-webkit-scrollbar-thumb {
+		border-radius: 5px;
+		box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+		background:  #ccc;
+	}
+
+	::-webkit-scrollbar-track {
+		border-radius: 5px;
+		background: white;
+
+	}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -84,36 +98,5 @@ export default {
       color: #42b983;
     }
   };
-}
-
-.nav-top{
-  width: 100%;
-  position: fixed;
-  top:0;
-  z-index:999;
-  left:0;
-}
-
-.index_bg{
-  width:100%;
-
-}
-
-.web-logo{
-    float: left;
-    height: 60px;
-    line-height: 60px;
-    margin: 0;
-    color:#606266;
-    padding:0 0.8em;
-}
-
-.web-search{
-    float: right;
-    height: 60px;
-    line-height: 60px;
-    margin: 0;
-    color:#606266;
-    padding:0 0.8em;
 }
 </style>
