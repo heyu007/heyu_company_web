@@ -1,5 +1,7 @@
 <template>
   <div class="hello">
+  <!-- 顶部导航搜索 -->
+  <TopNav @searchChildValue="searchFatherValue"></TopNav>
   <div style="margin:10px auto">
     <el-row :gutter="10">
       <!-- left start -->
@@ -130,6 +132,7 @@ import labels from "../components/Labels.vue";
 import carousel from "../components/Carousel.vue";
 import WebInfo from "../components/WebInfo.vue";
 import rankList from "../components/Rank.vue";
+import TopNav from "../components/TopNav.vue";
 
 export default {
   name: 'HelloWorld',
@@ -142,9 +145,11 @@ export default {
     carousel,
     WebInfo,
     rankList,
+    TopNav,
   },
   data(){
     return {
+      keyword:'',
       carousel:[
         "https://img.zcool.cn/community/01f8b25fd0361c11013fdcc77213eb.jpg@1380w",
         "https://img.zcool.cn/community/01f8b25fd0361c11013fdcc77213eb.jpg@1380w",
@@ -367,8 +372,13 @@ export default {
       d = d < 10 ? ('0' + d) : d
       const time = y + '-' + m + '-' + d
       return time
+    },
+    searchFatherValue(val){
+      // console.log(val);
+      this.keyword = val;
     }
   },
+
 }
 </script>
 

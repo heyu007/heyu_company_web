@@ -53,9 +53,11 @@ export default {
             keyword:'',
         }
     },
+    // props:['keyword'],
     methods:{
         serach(e){
-            this.$message(e);
+            // this.$message(e);
+            this.$emit('searchChildValue',this.keyword)
         },
     }
 }

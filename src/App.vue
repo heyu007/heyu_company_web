@@ -1,7 +1,5 @@
 <template>
   <div id="app">
-    <!-- 顶部导航搜索 -->
-    <TopNav></TopNav>
 
     <!-- 顶部背景图 -->
     <TopBg></TopBg>
@@ -15,13 +13,11 @@
 
 <script>
 import BackTop from "./components/BackTop.vue";
-import TopNav from "./components/TopNav.vue";
 import TopBg from "./components/TopBg.vue";
 
 export default {
   components:{
     BackTop,
-    TopNav,
     TopBg,
   },
   data() {

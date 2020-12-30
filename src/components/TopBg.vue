@@ -29,6 +29,9 @@ export default {
             index_bg_show:'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1608268489507&di=437aea185596346a4f497ffa68d7aa02&imgtype=0&src=http%3A%2F%2Fpic1.win4000.com%2Fwallpaper%2F9%2F586369e34d79d.jpg',
         }
     },
+    mounted(){
+        this.rand_bg();
+    },
     methods:{
         rand_bg(){
             let Max = this.index_bg.length - 1;
