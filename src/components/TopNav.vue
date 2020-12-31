@@ -53,7 +53,6 @@ export default {
             keyword:'',
         }
     },
-    // props:['keyword'],
     methods:{
         serach(e){
             // this.$message(e);

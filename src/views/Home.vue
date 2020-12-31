@@ -24,7 +24,8 @@
           <!-- news start -->
           <el-tab-pane label="最新资讯">
             <!-- 轮播图 -->
-            <carousel></carousel>
+            <!-- <carousel></carousel> -->
+            <carousels></carousels>
 
             <!-- messsage list -->
             <div class="msg-list" v-for="(item,index) in article" :key="index">
@@ -130,6 +131,7 @@
 import notice from "../components/Notice.vue";
 import labels from "../components/Labels.vue";
 import carousel from "../components/Carousel.vue";
+import carousels from "../components/Carousels.vue";
 import WebInfo from "../components/WebInfo.vue";
 import rankList from "../components/Rank.vue";
 import TopNav from "../components/TopNav.vue";
@@ -142,10 +144,11 @@ export default {
   components:{
     notice,
     labels,
-    carousel,
+    // carousel,
     WebInfo,
     rankList,
     TopNav,
+    carousels,
   },
   data(){
     return {
@@ -238,7 +241,8 @@ export default {
       this.status = false;
       this.$axios.get(this.$gd.url_prefix+'/article_list',{
         params:{
-          page:this.current_page
+          page:this.current_page,
+          keyword:this.keyword
         }
       }).then((response)=>{
         this.status=true
@@ -373,9 +377,38 @@ export default {
       const time = y + '-' + m + '-' + d
       return time
     },
+
+    // 顶部搜索栏
     searchFatherValue(val){
       // console.log(val);
       this.keyword = val;
+      if(this.keyword){
+        this.current_page = 1;
+      }
+      this.$axios.get(this.$gd.url_prefix+'/article_list',{
+        params:{
+          page:this.current_page,
+          keyword:this.keyword
+        }
+      }).then((response)=>{
+        this.status=true
+        let data = response.data;
+        if(data.code == 200 && data.data.data.length > 0){
+          if(data.data.current_page + 1 <= data.data.total){
+            this.current_page = data.data.current_page + 1;
+            this.load = false
+            this.article = data.data.data;
+            // console.log('da--------------');
+            // console.log(this.article);
+          }else{
+            this.article_end = 'Done ~ ~ ~';
+            this.load = false
+          }
+        }else{
+            this.article_end = 'Done ~ ~ ~';
+            this.load = false
+          }
+      })
     }
   },
 
