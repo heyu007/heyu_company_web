@@ -13,6 +13,12 @@
         <!-- 标签 -->
         <labels></labels>
 
+        <!-- 网站备注 -->
+        <Notes></Notes>
+
+        <!-- 友链 -->
+        <Links></Links>
+
       </el-col>
       <!-- left end -->
 
@@ -135,6 +141,9 @@ import carousels from "../components/Carousels.vue";
 import WebInfo from "../components/WebInfo.vue";
 import rankList from "../components/Rank.vue";
 import TopNav from "../components/TopNav.vue";
+import Notes from "../components/Notes.vue";
+import Links from "../components/Links.vue";
+
 
 export default {
   name: 'HelloWorld',
@@ -149,6 +158,8 @@ export default {
     rankList,
     TopNav,
     carousels,
+    Notes,
+    Links,
   },
   data(){
     return {
@@ -394,16 +405,11 @@ export default {
         this.status=true
         let data = response.data;
         if(data.code == 200 && data.data.data.length > 0){
-          if(data.data.current_page + 1 <= data.data.total){
             this.current_page = data.data.current_page + 1;
             this.load = false
             this.article = data.data.data;
             // console.log('da--------------');
             // console.log(this.article);
-          }else{
-            this.article_end = 'Done ~ ~ ~';
-            this.load = false
-          }
         }else{
             this.article_end = 'Done ~ ~ ~';
             this.load = false

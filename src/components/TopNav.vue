@@ -2,7 +2,7 @@
     <div>
         <div class="nav-top">
             <div class="el-menu-demo" mode="horizontal" style="background-color:rgba(255,255,255,0.7)">
-                <div class="web-logo">
+                <div class="web-logo hidden-sm-and-down">
                 假装有logo
                 </div>
                 <div class="web-search">

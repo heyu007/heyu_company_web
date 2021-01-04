@@ -10,6 +10,12 @@
 
                     <!-- 标签 -->
                     <labels></labels>
+                                
+                    <!-- 网站备注 -->
+                    <Notes></Notes>
+                            
+                    <!-- 友链 -->
+                    <Links></Links>
 
                 </el-col>
                 <!-- left end -->
@@ -83,6 +89,8 @@ import notice from "../components/Notice.vue";
 import labels from "../components/Labels.vue";
 import carousel from "../components/Carousel.vue";
 import webInfo from "../components/WebInfo.vue";
+import Notes from "../components/Notes.vue";
+import Links from "../components/Links.vue";
 
 export default {
     components:{
@@ -90,6 +98,8 @@ export default {
         labels,
         carousel,
         webInfo,
+        Notes,
+        Links,
     },
     mounted(){
         this.findArticle();

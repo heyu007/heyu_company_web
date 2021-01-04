@@ -135,6 +135,16 @@ export default {
     
         /**获取地图定位*/
         getLocation() {
+          // this.$cookieStore.delCookie('locationMsg');return;
+          this.getCurrentDate(0);
+          let locationMsg = this.$cookieStore.getCookie('locationMsg');
+          if(locationMsg){
+            console.log('welcome baby');
+            this.province = this.$cookieStore.getCookie('province');
+            this.city = this.$cookieStore.getCookie('city');
+            this.district = this.$cookieStore.getCookie('district');
+            this.weather = this.$cookieStore.getCookie('weather');
+          }else{
             let _that = this;
             let geolocation = location.initMap("map-container"); //定位
             AMap.event.addListener(geolocation, "complete", result => {
@@ -145,10 +155,8 @@ export default {
                 _that.city = result.addressComponent.city;
                 _that.district = result.addressComponent.district;
                 _that.weatherInfo(this.province,this.city);
-                _that.getCurrentDate(0);
             });
-
-            
+          }
         },
         // 天气
         weatherInfo(province,city){
@@ -162,6 +170,18 @@ export default {
               // console.log(res);
               if(res.result == 0){
                 this.weather = res.content.split("{br}").join('</br>');
+                let cookieData = {
+                  province:this.province,
+                  city:this.city,
+                  district:this.district,
+                  weather:this.weather,
+                }
+                let expDay = 1;
+                this.$cookieStore.setCookie('locationMsg',true,expDay);
+                this.$cookieStore.setCookie('province',this.province,expDay);
+                this.$cookieStore.setCookie('city',this.city,expDay);
+                this.$cookieStore.setCookie('district',this.district,expDay);
+                this.$cookieStore.setCookie('weather',this.weather,expDay);
               }
             })
           }
