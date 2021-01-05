@@ -57,12 +57,6 @@
     float: left;
     list-style-type:none;
   }
-  
-  // 排行榜
-  .rank{
-    margin:0.5em 0;
-    font-size:13px
-  }
 
   // tags
   .tags{
@@ -115,24 +109,12 @@ export default {
               "name":'laowang',
               "header_img":'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1024793515,716085277&fm=15&gp=0.jpg'
             },
-            rank:[],
         }
     },
     mounted(){
         this.getLocation(); // 调用获取地理位置
-        this.articleRank();
     },
     methods:{
-         articleRank(){
-           this.$axios.get(this.$gd.url_prefix+'/article_rank_list').then((response)=>{
-             let rank = response.data;
-             if(rank.code == 200 && rank.data.length > 0){
-               this.rank = rank.data;
-             }
-            //  console.log(this.rank[0].title);return;
-           }) 
-         },
-    
         /**获取地图定位*/
         getLocation() {
           // this.$cookieStore.delCookie('locationMsg');return;
