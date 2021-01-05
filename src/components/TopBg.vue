@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="index_bg" style="width:100%;height:500px;" :style="'background:url('+index_bg_show+') repeat center center'"></div>
+        <div class="index_bg" style="width:100%;height:500px;" :style="'background:url('+index_bg_show+') repeat center center'" @click="backHome"></div>
         <div style="margin-top:30px"></div>
     </div>
 </template>
@@ -38,6 +38,15 @@ export default {
             let Min = 0;
             let rand_index = Math.floor(Math.random() * (Max - Min + 1)) + Min;
             this.index_bg_show = this.index_bg[rand_index];
+        },
+        backHome(){
+            console.log(this.$router.path);return;
+            if(this.$router.path != '/'){
+                this.$message('来了，老弟~~~');
+                this.$router.push({
+                    path:'/',
+                })
+            }
         }
     }
 }

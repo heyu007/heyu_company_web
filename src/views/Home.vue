@@ -3,7 +3,6 @@
   <!-- 顶部导航搜索 -->
   <TopNav @searchChildValue="searchFatherValue"></TopNav>
 
-  <!-- 顶部背景图 -->
   <TopBg></TopBg>
   <div style="margin:10px auto">
     <el-row :gutter="10">
@@ -146,6 +145,7 @@ import rankList from "../components/Rank.vue";
 import TopNav from "../components/TopNav.vue";
 import Notes from "../components/Notes.vue";
 import Links from "../components/Links.vue";
+import TopBg from "../components/TopBg.vue";
 
 
 export default {
@@ -163,6 +163,7 @@ export default {
     carousels,
     Notes,
     Links,
+    TopBg
   },
   data(){
     return {

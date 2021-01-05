@@ -1,6 +1,7 @@
 <template>
     <div>
-        
+        <!-- 顶部导航搜索 -->
+        <!-- <TopNav @searchChildValue="searchFatherValue"></TopNav> -->
         <!-- 顶部背景图 -->
         <TopBg></TopBg>
         <div style="margin:10px auto">
@@ -94,6 +95,7 @@ import carousel from "../components/Carousel.vue";
 import webInfo from "../components/WebInfo.vue";
 import Notes from "../components/Notes.vue";
 import Links from "../components/Links.vue";
+import TopBg from "../components/TopBg.vue";
 
 export default {
     components:{
@@ -103,6 +105,7 @@ export default {
         webInfo,
         Notes,
         Links,
+        TopBg
     },
     mounted(){
         this.findArticle();
