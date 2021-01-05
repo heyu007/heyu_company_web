@@ -1,9 +1,6 @@
 <template>
   <div id="app">
-
-    <!-- 顶部背景图 -->
-    <TopBg></TopBg>
-
+    
     <router-view/>
     
     <!-- 返回顶部 -->

@@ -1,5 +1,8 @@
 <template>
     <div>
+        
+        <!-- 顶部背景图 -->
+        <TopBg></TopBg>
         <div style="margin:10px auto">
             <el-row :gutter="10">
                 <!-- left start -->

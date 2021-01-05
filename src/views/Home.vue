@@ -2,6 +2,9 @@
   <div class="hello">
   <!-- 顶部导航搜索 -->
   <TopNav @searchChildValue="searchFatherValue"></TopNav>
+
+  <!-- 顶部背景图 -->
+  <TopBg></TopBg>
   <div style="margin:10px auto">
     <el-row :gutter="10">
       <!-- left start -->

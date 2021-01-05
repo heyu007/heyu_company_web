@@ -22,6 +22,23 @@ const routes = [
     path: '/article',
     name: 'Article',
     component: ()=> import('../views/Article.vue')
+  },
+  {
+    path:'/404',
+    name:'404',
+    meta:{
+      keepAlive:true,
+      isTab:false,
+      isAuth:false,
+    },
+    component:()=>import('../views/404.vue'),
+  },
+  {
+    path:'*',
+    redirect:'/404',
+    name:'notFound',
+   
+    hidden:true,
   }
 ]
 
