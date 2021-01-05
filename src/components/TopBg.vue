@@ -40,8 +40,7 @@ export default {
             this.index_bg_show = this.index_bg[rand_index];
         },
         backHome(){
-            console.log(this.$router.path);return;
-            if(this.$router.path != '/'){
+            if(this.$route.path != '/'){
                 this.$message('来了，老弟~~~');
                 this.$router.push({
                     path:'/',
